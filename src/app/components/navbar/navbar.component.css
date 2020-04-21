@@ -1,0 +1,24 @@
+nav{
+  background: #1f87e6;
+  border-radius: 0;
+  border: 0;
+}
+nav a{
+  color: #83c3f7;
+  font-size: 14px;
+}
+nav a:hover{
+  color:#333;
+  transition: 500ms;
+}
+.navbar-default .navbar-nav>.active>a{
+  background: #1b6ecb;
+  color:#fafafa;
+  line-height: 24px;
+}
+
+.logo{
+  color: #123d79;
+  font-size: 18px;
+  font-style: Bold;
+}

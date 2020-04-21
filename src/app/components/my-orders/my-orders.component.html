@@ -1,0 +1,62 @@
+<style>
+    .arc text {
+        font: 10px sans-serif;
+        text-anchor: middle;
+    }
+
+    .arc path {
+        stroke: #fff;
+    }
+
+    .title {
+        fill: teal;
+        font-weight: bold;
+    }
+</style>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<div class="page-header">
+    My orders
+</div>
+<div class="col-sm-8">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Is Bitcoin</th>
+            <th>Movies</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let o of orders">
+            <td>{{o.order_date | date:'dd/MM/yyyy'}}</td>
+            <td>{{o.is_bitcoin}}</td>
+            <td><span class="badge" *ngFor="let p of o.movies">{{p.name}}</span></td>
+            <td>{{o.price}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-4">
+<h3>Most recomanded product</h3>
+    <div class="thumbnail">
+        <h4 class="text-center"><span class="label label-info">{{mostRecomand?.category?.name}}</span></h4>
+        <img src={{mostRecomand?.image}} class="img-responsive">
+        <div class="caption">
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    <h3>{{mostRecomand?.name}}</h3>
+                </div>
+                <div class="col-md-6 col-xs-6 price">
+                    <h3>
+                        <label>${{mostRecomand?.price | number}}</label></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<!--<svg width="500" height="400"></svg>-->

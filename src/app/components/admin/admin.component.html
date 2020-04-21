@@ -1,0 +1,401 @@
+<style>
+  .arc text {
+    font: 10px sans-serif;
+    text-anchor: middle;
+  }
+
+  .arc path {
+    stroke: #fff;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+  }
+
+  text,
+  .axis text {
+    font-size: 11px;
+  }
+
+  rect:hover {
+    fill: orange;
+  }
+</style>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<h1 class="page-header">Admin Page</h1>
+
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#Categories">Categories</a></li>
+  <li><a data-toggle="tab" href="#Movies">Movies</a></li>
+  <li><a data-toggle="tab" href="#Users">Users</a></li>
+  <li><a data-toggle="tab" href="#Charts">Charts</a></li>
+
+</ul>
+
+<div class="tab-content">
+
+  <div id="Categories" class="tab-pane fade in active">
+    <h3>Categories</h3>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-10">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let c of categories">
+              <td>{{c?.name}}</td>
+
+              <td>
+                <button type="button" class="btn btn-info" data-toggle="modal" (click)="selectCat(c)"
+                        data-target="#editCat">Edit
+                </button>
+                <button type="button" class="btn btn-danger" (click)="deleteCat(c)">Delete</button>
+
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createCat">Add
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div id="Movies" class="tab-pane fade">
+    <h3>Movies</h3>
+
+    <div class="container">
+      <section>
+        <div class="row">
+          <div class="col-sm-3">
+            <label>Search by name</label>
+            <input [(ngModel)]="searchText" placeholder="" class="form-control"/>
+          </div>
+          <div class="col-sm-3">
+            <label>Search items less then price</label>
+            <input type="number" [(ngModel)]="searchPrice" placeholder="" class="form-control"/>
+          </div>
+          <div class="col-sm-3">
+            <label>Search items by category</label>
+            <input type="text" [(ngModel)]="searchCat" placeholder="" class="form-control"/>
+          </div>
+        </div>
+      </section>
+      <div class="row">
+        <div class="col-sm-10">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let c of movies | filter : searchText | filterCat : searchCat | filterByPrice: searchPrice">
+              <td>{{c?.name}}</td>
+              <td>{{c?.price}}</td>
+              <td>{{c?.category.name}}</td>
+              <td><img style="width:50px;height: 50px;" [src]="c.image" alt=""></td>
+
+
+              <td>
+                <button type="button" class="btn btn-info" data-toggle="modal"
+                        (click)="selectMovie(c)"
+                        data-target="#editMovie">Edit
+                </button>
+                <button type="button" class="btn btn-danger" (click)="deleteMovie(c)">Delete</button>
+
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createMovie">
+            Add
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="Users" class="tab-pane fade">
+    <h3>Users</h3>
+
+    <div class="container">
+      <section style="margin: 10px 0">
+        <div class="row">
+          <div class="col-sm-3">
+            <label>Search by Email</label>
+            <input [(ngModel)]="searchEmail" placeholder="" class="form-control"/>
+          </div>
+          <div class="col-sm-3">
+            <label>Search By Password</label>
+            <input [(ngModel)]="searchPassword" placeholder="" class="form-control"/>
+          </div>
+          <div class="col-sm-3">
+            <label>Search By gender</label>{{searchGender}}
+            <input [(ngModel)]="searchGender" placeholder="" class="form-control"/>
+          </div>
+          <div class="col-sm-3">
+            <!--                <label>Search items by category</label>-->
+            <!--                <input type="text" [(ngModel)]="searchCat" placeholder="" class="form-control"/>-->
+          </div>
+        </div>
+      </section>
+      <div class="row">
+        <div class="col-sm-10">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>Email</th>
+              <th>Password</th>
+              <th>Gender</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let c of users | filterEmail : searchEmail | filterPassword : searchPassword | filterGender : searchGender">
+              <td>{{c?.email}}</td>
+              <td>{{c?.password}}</td>
+              <td>{{c?.gender}}</td>
+              <td>
+                <button type="button" class="btn btn-info" data-toggle="modal" (click)="selectUser(c)"
+                        data-target="#editUser">Edit
+                </button>
+                <button type="button" class="btn btn-danger" (click)="deleteUser(c)">Delete</button>
+
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createUser">
+            Add
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div id="Charts" class="tab-pane fade">
+
+
+    <div class="container">
+      <h3>Pie chart Movies per category</h3>
+      <svg width="500" height="400"></svg>
+      <h3>Donut chart By gender</h3>
+      <svg id="byGender" width="960" height="550"></svg>
+    </div>
+
+
+  </div>
+</div>
+<!--MODALS-->
+<!-- Modal -->
+
+<!-- CATEGORIES -->
+<div id="createCat" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">New Category</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" name="newCat" [(ngModel)]="newCat.name">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createCat()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="editCat" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Category</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" name="newCat" [ngModel]="selectedCat?.name"
+               (ngModelChange)="selectedCat.name=$event">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="updateCategory()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--MovieS-->
+<div id="createMovie" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">New Movie</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="">Name:</label>
+          <input type="text" class="form-control" [(ngModel)]="newMovie.name">
+        </div>
+        <div class="form-group">
+          <label for="">Price:</label>
+          <input type="text" class="form-control" [(ngModel)]="newMovie.price">
+        </div>
+        <div class="form-group">
+          <label for="">Category:</label>
+          <select [(ngModel)]="newMovie.category">
+            <option *ngFor="let c of categories" [ngValue]="c">{{c.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Image:</label>
+          <input type="text" class="form-control" [(ngModel)]="newMovie.image">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createMovie()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="editMovie" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Movie</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="">Name:</label>
+          <input type="text" class="form-control" [ngModel]="selctedMovie?.name"
+                 (ngModelChange)="selctedMovie.name=$event">
+        </div>
+        <div class="form-group">
+          <label for="">Price:</label>
+          <input type="text" class="form-control" [ngModel]="selctedMovie?.price"
+                 (ngModelChange)="selctedMovie.price=$event">
+        </div>
+        <div class="form-group">
+          <label for="">Category:</label>
+          <select [ngModel]="selctedMovie?.category">
+            <option *ngFor="let c of categories" [ngValue]="c">{{c.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Image:</label>
+          <input type="text" class="form-control" [ngModel]="selctedMovie?.image"
+                 (ngModelChange)="selctedMovie.image=$event">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="updateMovie()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--USERS-->
+<div id="createUser" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">New User</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="">Email:</label>
+          <input type="text" class="form-control" [(ngModel)]="newUser.email">
+        </div>
+        <div class="form-group">
+          <label for="">Password:</label>
+          <input type="text" class="form-control" [(ngModel)]="newUser.password">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createUser()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="editUser" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit User</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="">Password:</label>
+          <input type="text" class="form-control" [ngModel]="selectedUser?.password"
+                 (ngModelChange)="selectedUser.password=$event">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="updateUser()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
