@@ -19,9 +19,7 @@ export class NavbarComponent implements OnInit {
     this.user = this.auth.getUser();
     if (this.user) {
       this.isLoggedIn = true;
-      if (this.user) {
-        this.isAdmin = this.user.role == 'admin';
-      }
+      this.isAdmin = this.user.role == 'admin';      
     }
 
     this.service.onClearBusketCallback$.subscribe(data => {
@@ -38,8 +36,8 @@ export class NavbarComponent implements OnInit {
     this.service.onUserLoggedCallback$.subscribe(data => {
       this.numberOfUsers = data;
       this.user = this.auth.getUser();
-      this.isLoggedIn = true;
       if (this.user) {
+        this.isLoggedIn = true;
         this.isAdmin = this.user.role == 'admin';
       }
     });

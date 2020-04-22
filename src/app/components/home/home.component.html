@@ -64,10 +64,6 @@
               <label>${{p?.price | number}}</label></h3>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6 col-xs-6 price">Category : {{p?.catName}}
-          </div>
-        </div>
         <div class="row" *ngIf="user">
           <div class="col-md-12">
             <a class="btn btn-success btn-product" (click)="addMovie(p)"><span

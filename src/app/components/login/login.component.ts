@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
       if (res.email == 'y@a.com') {
         res.role = 'admin';
       }
+      res.cart= this.service.getBasket();
       this.service.emitEventOnLoggedIn();
       this.auth.setUser(res);
       this.router.navigateByUrl('home');

@@ -35,7 +35,7 @@ export class OrderComponent implements OnInit {
 
 
   ngOnInit() {
-    this.basket = this.service.getBasket;
+    this.basket = this.service.getBasket();
     if (this.basket) {
       this.total = this.basket.total;
     }

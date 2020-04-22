@@ -46,19 +46,17 @@ export class GlobalService {
     });
   }
 
-  get getBasket() {
+  getBasket() {
     return this.moviesInBusket;
   }
 
-  get getNumOfUsers() {
+  getNumOfUsers() {
     return this.numOfusers;
   }
 
-  clearBusket() {
-    this.moviesInBusket = {
-      movies: [],
-      total: 0
-    };
+  clearBusket() {    
+    this.moviesInBusket.movies = [];
+    this.moviesInBusket.total = 0;
     this.onClearBusketCallback.next();
   }
 
