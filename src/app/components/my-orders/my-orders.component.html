@@ -37,8 +37,8 @@
         </tbody>
     </table>
 </div>
-<div class="col-sm-4">
-<h3>Most recomanded product</h3>
+<div *ngIf="mostRecomand" class="col-sm-4">
+<h3>Recommand to watch again</h3>
     <div class="thumbnail">
         <h4 class="text-center"><span class="label label-info">{{mostRecomand?.category?.name}}</span></h4>
         <img src={{mostRecomand?.image}} class="img-responsive">

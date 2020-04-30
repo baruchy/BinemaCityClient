@@ -3,6 +3,7 @@ import * as io from 'socket.io-client';
 import {Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {AuthService} from './auth.service';
 
 @Injectable()
 export class GlobalService {
@@ -31,7 +32,7 @@ export class GlobalService {
 
   numOfusers = '0';
 
-  constructor(private http: HttpClient, public router: Router) {
+  constructor(private http: HttpClient, public router: Router, private auth: AuthService) {
     this.socket = io('http://localhost:3000/');
 
     this.socket.on('userLoggedIn', (numOfusers: any) => {
@@ -44,6 +45,13 @@ export class GlobalService {
     this.socket.on('onRefresh', (numOfusers: any) => {
       this.onRefreshCallback.next(numOfusers);
     });
+    
+    if(this.auth.getUser()) {
+      if (this.auth.getUser().cart) {
+        this.moviesInBusket = this.auth.getUser().cart;    
+      }
+    }
+        
   }
 
   getBasket() {
@@ -226,4 +234,5 @@ export class GlobalService {
   emitEventOnLoggedOut() {
     this.socket.emit('userLoggedOut');
   }
+  
 }

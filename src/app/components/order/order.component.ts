@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GlobalService} from '../../services/global.service';
-import {Authervice} from '../../services/auth.service';
+import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -28,7 +28,7 @@ export class OrderComponent implements OnInit {
   total = 0;
   user: any;
 
-  constructor(private service: GlobalService, private auth: Authervice, private router: Router) {
+  constructor(private service: GlobalService, private auth: AuthService, private router: Router) {
     this.user = this.auth.getUser();
     this.order.user = this.user._id;
   }
@@ -52,6 +52,14 @@ export class OrderComponent implements OnInit {
 
 //Pay function set the order to db
   pay() {
+  if (isNaN(Number(this.order.card_digits))) {
+  alert('please add valid card number');
+  return;
+  }
+  if (!this.basket.movies || this.basket.movies.length == 0) {
+    alert('No movies in the busket');
+    return;
+  }
     this.order.movies = this.basket.movies;
     this.order.price = this.total;
     this.order.order_date = new Date();

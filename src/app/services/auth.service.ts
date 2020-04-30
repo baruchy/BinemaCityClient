@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 
 
 @Injectable()
-export class Authervice {
+export class AuthService {
     constructor(private http: HttpClient) {}
 
     setUser(user: any) {

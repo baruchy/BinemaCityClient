@@ -1,6 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {GlobalService} from '../../services/global.service';
-import {Authervice} from '../../services/auth.service';
+import {AuthService} from '../../services/auth.service';
 import * as d3 from 'd3';
 
 @Component({
@@ -15,9 +15,8 @@ export class MyOrdersComponent implements OnInit {
   mostRecomand: any = null;
 
 
-  constructor(private auth: Authervice, private service: GlobalService) {
+  constructor(private auth: AuthService, private service: GlobalService) {
     this.user = this.auth.getUser();
-    //this.service.getUserOrders(this.user._id);
 
     this.service.getUserOrders(this.user._id).subscribe((res: any) => {
       this.orders = res;
@@ -25,6 +24,7 @@ export class MyOrdersComponent implements OnInit {
     });
   }
 
+  // Most recommended is the first movie in the most expensive order
   getMostRecomanded() {
     let prodIds = [];
     let prods = [];

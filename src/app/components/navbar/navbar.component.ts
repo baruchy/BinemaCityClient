@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Authervice} from '../../services/auth.service';
+import {AuthService} from '../../services/auth.service';
 import {GlobalService} from '../../services/global.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   basket: any = {products: [], total: 0, totalItems: 0};
   private user: any;
 
-  constructor(private auth: Authervice, private service: GlobalService) {
+  constructor(private auth: AuthService, private service: GlobalService) {
     this.user = this.auth.getUser();
     if (this.user) {
       this.isLoggedIn = true;

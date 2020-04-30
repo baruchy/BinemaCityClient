@@ -15,7 +15,7 @@ export class AboutComponent implements OnInit {
       let c:any = document.getElementById("myCanvas");
       let ctx = c.getContext("2d");
       ctx.font = "30px Arial";
-      ctx.fillText("Block Buster", 10, 50);
+      ctx.fillText("Binema City", 10, 50);
   }
 
 }

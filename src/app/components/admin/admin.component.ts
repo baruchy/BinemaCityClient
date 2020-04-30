@@ -148,7 +148,6 @@ export class AdminComponent implements OnInit {
         svg.append('g')
           .attr('transform', 'translate(' + (width / 2 - 120) + ',' + 20 + ')')
           .append('text')
-          .text('Movies per category charts')
           .attr('class', 'title');
       });
     });

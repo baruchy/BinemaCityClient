@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ViewChild} from '@angular/core';
 import {NotificationsComponent} from '../notifications/notifications.component';
 import {GlobalService} from '../../services/global.service';
-import {Authervice} from '../../services/auth.service';
+import {AuthService} from '../../services/auth.service';
 import {Key} from 'selenium-webdriver';
 
 declare var google: any;
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   user: any;
   categories = [];
 
-  constructor(private service: GlobalService, private auth: Authervice) {
+  constructor(private service: GlobalService, private auth: AuthService) {
 
     //get user data
     this.user = this.auth.getUser();
@@ -59,6 +59,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
         let userMoviesPerCategory = {};
         //let userMoviesKeys = [];
         this.service.getUserOrders(this.user._id).subscribe((orders: any) => {
+        if(!orders || (orders.length == 0)) {
+          this.mlp =  this.movies[Math.floor(Math.random() * this.movies.length)];
+          return;
+        }
           orders.forEach((o) => {
             o.movies.forEach((om) => {
               om.category = this.categories.find(c => c._id == om.category);

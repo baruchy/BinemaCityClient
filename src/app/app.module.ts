@@ -30,7 +30,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {ModalModule} from 'ngx-bootstrap';
 import {GlobalService} from './services/global.service';
-import {Authervice} from './services/auth.service';
+import {AuthService} from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -66,7 +66,7 @@ import {Authervice} from './services/auth.service';
   ],
   providers: [
     GlobalService,
-    Authervice
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
