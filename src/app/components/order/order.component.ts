@@ -52,7 +52,7 @@ export class OrderComponent implements OnInit {
 
 //Pay function set the order to db
   pay() {
-  if (isNaN(Number(this.order.card_digits))) {
+  if (this.order.card_digits == '' || isNaN(Number(this.order.card_digits))) {
   alert('please add valid card number');
   return;
   }
