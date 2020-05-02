@@ -205,12 +205,6 @@ export class AdminComponent implements OnInit {
     this.selectedCat = cat;
   }
 
-  deleteCat(cat: any) {
-    this.service.deleteCategories(cat).subscribe((res) => {
-      this.ngOnInit();
-    });
-  }
-
   createCat() {
     this.service.createCategories(this.newCat).subscribe((res) => {
       this.ngOnInit();
@@ -253,12 +247,6 @@ export class AdminComponent implements OnInit {
   // USERS
   selectUser(u: any) {
     this.selectedUser = u;
-  }
-
-  deleteUser(u: any) {
-    this.service.deleteUser(u).subscribe((res) => {
-      this.ngOnInit();
-    });
   }
 
   createUser() {

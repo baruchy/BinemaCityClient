@@ -45,13 +45,13 @@ export class GlobalService {
     this.socket.on('onRefresh', (numOfusers: any) => {
       this.onRefreshCallback.next(numOfusers);
     });
-    
+
     if(this.auth.getUser()) {
       if (this.auth.getUser().cart) {
-        this.moviesInBusket = this.auth.getUser().cart;    
+        this.moviesInBusket = this.auth.getUser().cart;
       }
     }
-        
+
   }
 
   getBasket() {
@@ -62,7 +62,7 @@ export class GlobalService {
     return this.numOfusers;
   }
 
-  clearBusket() {    
+  clearBusket() {
     this.moviesInBusket.movies = [];
     this.moviesInBusket.total = 0;
     this.onClearBusketCallback.next();
@@ -158,6 +158,7 @@ export class GlobalService {
   }
 
   deleteMovies(c: any) {
+    console.log(c);
     return this.http.delete('http://localhost:3000/api/Movies/' + c._id, c);
   }
 
@@ -234,5 +235,5 @@ export class GlobalService {
   emitEventOnLoggedOut() {
     this.socket.emit('userLoggedOut');
   }
-  
+
 }
