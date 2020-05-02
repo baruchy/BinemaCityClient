@@ -324,7 +324,7 @@
         </div>
         <div class="form-group">
           <label for="">Category:</label>
-          <select [ngModel]="selctedMovie?.category">
+          <select [ngModel]="selctedMovie?.category?.name" (ngModelChange)="selctedMovie.category=$event">
             <option *ngFor="let c of categories" [ngValue]="c">{{c.name}}</option>
           </select>
         </div>
