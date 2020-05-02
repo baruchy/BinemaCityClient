@@ -62,7 +62,7 @@ import {AuthService} from './services/auth.service';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ModalModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     GlobalService,

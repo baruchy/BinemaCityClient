@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, NgZone, OnInit} from '@angular/core';
 import {ViewChild} from '@angular/core';
 import {NotificationsComponent} from '../notifications/notifications.component';
 import {GlobalService} from '../../services/global.service';
@@ -14,7 +14,6 @@ declare var brain: any;
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-
   // get referance to notification component
   @ViewChild('notification', {static: false}) notification: NotificationsComponent;
   addedSuccess = false;
@@ -32,7 +31,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   user: any;
   categories = [];
 
-  constructor(private service: GlobalService, private auth: AuthService) {
+  constructor(private service: GlobalService, private auth: AuthService, private _zone: NgZone) {
 
     //get user data
     this.user = this.auth.getUser();
@@ -59,10 +58,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
         let userMoviesPerCategory = {};
         //let userMoviesKeys = [];
         this.service.getUserOrders(this.user._id).subscribe((orders: any) => {
-        if(!orders || (orders.length == 0)) {
-          this.mlp =  this.movies[Math.floor(Math.random() * this.movies.length)];
-          return;
-        }
+          if (!orders || (orders.length == 0)) {
+            this.mlp = this.movies[Math.floor(Math.random() * this.movies.length)];
+            return;
+          }
           orders.forEach((o) => {
             o.movies.forEach((om) => {
               om.category = this.categories.find(c => c._id == om.category);
@@ -102,7 +101,70 @@ export class HomeComponent implements OnInit, AfterViewInit {
         });
       }
     });
+    this.service.getLocations().subscribe((_locations: any) => {
+      let geocoder;
+      let map;
+      const bounds = new google.maps.LatLngBounds();
+      this._zone.run(() => {
+        function initialize() {
+          map = new google.maps.Map(
+            document.getElementById('map_canvas'), {
+              center: new google.maps.LatLng(37.4419, -122.1419),
+              zoom: 13,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+          geocoder = new google.maps.Geocoder();
 
+          for (let i = 0; i < _locations.length; i++) {
+            geocodeAddress(_locations, i);
+          }
+        }
+
+
+        function geocodeAddress(locations, i) {
+          const title = locations[i].location[0];
+          const address = locations[i].location[1];
+          const url = locations[i].location[2];
+          geocoder.geocode({
+              'address': locations[i].location[1]
+            },
+            function (results, status) {
+              if (status == 'OK') {
+                var marker = new google.maps.Marker({
+                  icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+                  map: map,
+                  position: results[0].geometry.location,
+                  title: title,
+                  animation: google.maps.Animation.DROP,
+                  address: address,
+                  url: url
+                });
+                infoWindow(marker, map, title, address, url);
+                bounds.extend(marker.getPosition());
+                map.fitBounds(bounds);
+              } else {
+//              alert('geocode of ' + address + ' failed:' + status);
+              }
+            });
+        }
+
+        function infoWindow(marker, map, title, address, url) {
+          google.maps.event.addListener(marker, 'click', function () {
+            var html = '<div><h3>' + title + '</h3><p>' + address + '<br></div><a href=\'' + url + '\'>View location</a></p></div>';
+            let iw = new google.maps.InfoWindow({
+              content: html,
+              maxWidth: 350
+            });
+            iw.open(map, marker);
+          });
+        }
+        initialize();
+        //google.maps.event.addDomListener(window, 'load', initialize);
+      })
+
+
+
+    });
   }
 
   compare(a, b) {
@@ -124,65 +186,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     //get location from the server from google map
-    this.service.getLocations().subscribe((_locations: any) => {
-      let geocoder;
-      let map;
-      const bounds = new google.maps.LatLngBounds();
-
-      function initialize() {
-        map = new google.maps.Map(
-          document.getElementById('map_canvas'), {
-            center: new google.maps.LatLng(37.4419, -122.1419),
-            zoom: 13,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          });
-        geocoder = new google.maps.Geocoder();
-
-        for (let i = 0; i < _locations.length; i++) {
-          geocodeAddress(_locations, i);
-        }
-      }
-
-      google.maps.event.addDomListener(window, 'load', initialize);
-
-      function geocodeAddress(locations, i) {
-        const title = locations[i].location[0];
-        const address = locations[i].location[1];
-        const url = locations[i].location[2];
-        geocoder.geocode({
-            'address': locations[i].location[1]
-          },
-          function(results, status) {
-            if (status == 'OK') {
-              var marker = new google.maps.Marker({
-                icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
-                map: map,
-                position: results[0].geometry.location,
-                title: title,
-                animation: google.maps.Animation.DROP,
-                address: address,
-                url: url
-              });
-              infoWindow(marker, map, title, address, url);
-              bounds.extend(marker.getPosition());
-              map.fitBounds(bounds);
-            } else {
-//              alert('geocode of ' + address + ' failed:' + status);
-            }
-          });
-      }
-
-      function infoWindow(marker, map, title, address, url) {
-        google.maps.event.addListener(marker, 'click', function() {
-          var html = '<div><h3>' + title + '</h3><p>' + address + '<br></div><a href=\'' + url + '\'>View location</a></p></div>';
-          let iw = new google.maps.InfoWindow({
-            content: html,
-            maxWidth: 350
-          });
-          iw.open(map, marker);
-        });
-      }
-    });
 
 
   }
