@@ -73,19 +73,39 @@ export class AdminComponent implements OnInit {
     $('.modal-backdrop').remove();
 
     //get initial data for the screen
+    this.initData();
+
+  }
+
+  private initData() {
+    this.initCategories();
+    this.initMovies();
+    this.initUsers();
+  }
+
+  private initCategories() {
     this.service.getCategories().subscribe((res) => {
       this.categories = res;
     });
+  }
+
+  private initMovies() {
     this.service.getMovies().subscribe((res) => {
       this.movies = res;
       this.movies.forEach((p) => {
         p.catName = p.category.name;
       });
     });
+  }
+
+  private initUsers() {
     this.service.getUsers().subscribe((res) => {
       this.users = res;
     });
+  }
 
+  private closePopups() {
+    document.getElementsByName("closeModalButton").forEach(button => button.click());
   }
 
   ngAfterContentInit() {
@@ -206,14 +226,22 @@ export class AdminComponent implements OnInit {
 
   createCat() {
     this.service.createCategories(this.newCat).subscribe((res) => {
-      this.ngOnInit();
-    });
+      this.initData();
+      this.closePopups();
+      },
+      error => {
+        alert(error.error);
+      });
   }
 
   updateCategory() {
     this.service.updateCategory(this.selectedCat).subscribe((res) => {
-      this.ngOnInit();
-    });
+      this.initData();
+      this.closePopups();
+      },
+      error => {
+        alert(error.error);
+      });
   }
 
   // Movies
@@ -223,8 +251,12 @@ export class AdminComponent implements OnInit {
 
   deleteMovie(p: any) {
     this.service.deleteMovies(p).subscribe((res) => {
-      this.ngOnInit();
-    });
+      this.initData();
+      this.closePopups();
+      },
+      error => {
+        alert(error.error);
+      });
   }
 
   createMovie() {
@@ -233,14 +265,22 @@ export class AdminComponent implements OnInit {
       return false;
     }
     this.service.createMovies(this.newMovie).subscribe((res) => {
-      this.ngOnInit();
-    });
+      this.initData();
+      this.closePopups();
+    },
+      error => {
+        alert(error.error);
+      });
   }
 
   updateMovie() {
     this.service.updateMovies(this.selctedMovie).subscribe((res) => {
-      this.ngOnInit();
-    });
+      this.initData();
+      this.closePopups();
+    },
+      error => {
+        alert(error.error);
+      });
   }
 
   // USERS
@@ -250,14 +290,22 @@ export class AdminComponent implements OnInit {
 
   createUser() {
     this.service.createUser(this.newUser).subscribe((res) => {
-      this.ngOnInit();
-    });
+      this.initData();
+      this.closePopups();
+    },
+      error => {
+        alert(error.error);
+      });
   }
 
   updateUser() {
     this.service.updateUser(this.selectedUser).subscribe((res) => {
-      this.ngOnInit();
-    });
+      this.initData();
+      this.closePopups();
+    },
+      error => {
+        alert(error.error);
+      });
   }
 
 

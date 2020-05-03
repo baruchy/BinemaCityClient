@@ -15,8 +15,6 @@ import {
 } from './pipes/search.pipe';
 import {HomeComponent} from './components/home/home.component';
 import {TitlePipe} from './pipes/title/title.pipe';
-import {CategoriesComponent} from './components/categories/categories.component';
-import {CartComponent} from './components/cart/cart.component';
 import {LoginComponent} from './components/login/login.component';
 import {BasketComponent} from './components/basket/basket.component';
 import {ConfirmationModalComponent} from './components/confirmation-dialog/confirmation-dialog.component';
@@ -24,7 +22,6 @@ import {AdminComponent} from './components/admin/admin.component';
 import {OrderComponent} from './components/order/order.component';
 import {MyOrdersComponent} from './components/my-orders/my-orders.component';
 import {SignupComponent} from './components/signup/signup.component';
-import {ProductsComponent} from './components/products/products.component';
 import {AboutComponent} from './components/about/about.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
@@ -42,9 +39,6 @@ import {AuthService} from './services/auth.service';
     ConfirmationModalComponent,
     LoginComponent,
     SignupComponent,
-    ProductsComponent,
-    CategoriesComponent,
-    CartComponent,
     AdminComponent,
     BasketComponent,
     OrderComponent,

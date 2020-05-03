@@ -223,7 +223,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" (click)="initCategories()">&times;</button>
         <h4 class="modal-title">New Category</h4>
       </div>
       <div class="modal-body">
@@ -231,7 +231,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="createCat()">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" name="closeModalButton"  class="btn btn-default" data-dismiss="modal" (click)="initCategories()">Close</button>
       </div>
     </div>
 
@@ -244,7 +244,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" (click)="initCategories()">&times;</button>
         <h4 class="modal-title">Edit Category</h4>
       </div>
       <div class="modal-body">
@@ -253,7 +253,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="updateCategory()">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" name="closeModalButton"  class="btn btn-default" data-dismiss="modal" (click)="initCategories()">Close</button>
       </div>
     </div>
 
@@ -293,7 +293,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="createMovie()">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" name="closeModalButton"  class="btn btn-default" data-dismiss="modal" (click)="initMovies()">Close</button>
       </div>
     </div>
 
@@ -306,7 +306,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" (click)="initMovies()">&times;</button>
         <h4 class="modal-title">Edit Movie</h4>
       </div>
       <div class="modal-body">
@@ -335,7 +335,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="updateMovie()">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" name="closeModalButton"  class="btn btn-default" data-dismiss="modal" (click)="initMovies()">Close</button>
       </div>
     </div>
 
@@ -349,7 +349,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" (click)="initUsers()">&times;</button>
         <h4 class="modal-title">New User</h4>
       </div>
       <div class="modal-body">
@@ -365,7 +365,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="createUser()">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" name="closeModalButton"  class="btn btn-default" data-dismiss="modal"  (click)="initUsers()">Close</button>
       </div>
     </div>
 
@@ -378,7 +378,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal"  (click)="initUsers()">&times;</button>
         <h4 class="modal-title">Edit User</h4>
       </div>
       <div class="modal-body">
@@ -391,7 +391,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="updateUser()">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" name="closeModalButton"  class="btn btn-default" data-dismiss="modal" (click)="initUsers()">Close</button>
       </div>
     </div>
 
