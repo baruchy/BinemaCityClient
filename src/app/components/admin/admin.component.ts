@@ -70,7 +70,6 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     $('.modal').hide();
-    // $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
 
     //get initial data for the screen

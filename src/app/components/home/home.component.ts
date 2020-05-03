@@ -3,7 +3,6 @@ import {ViewChild} from '@angular/core';
 import {NotificationsComponent} from '../notifications/notifications.component';
 import {GlobalService} from '../../services/global.service';
 import {AuthService} from '../../services/auth.service';
-import {Key} from 'selenium-webdriver';
 
 declare var google: any;
 declare var brain: any;
@@ -18,7 +17,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('notification', {static: false}) notification: NotificationsComponent;
   addedSuccess = false;
   movies: any;
-  selectedMovie: any;
   searchText: '';
   searchCat: any;
   searchPrice: 0;
@@ -32,8 +30,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   categories = [];
 
   constructor(private service: GlobalService, private auth: AuthService, private _zone: NgZone) {
-
-    //get user data
     this.user = this.auth.getUser();
     this.service.getCategories().subscribe((res: any) => this.categories = res);
   }
@@ -54,14 +50,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
         p.catId = p.category._id;
         i++;
       });
+      this.mlp = this.movies[Math.floor(Math.random() * this.movies.length)];
+
       if (this.user && this.user._id) {
         let userMoviesPerCategory = {};
-        //let userMoviesKeys = [];
         this.service.getUserOrders(this.user._id).subscribe((orders: any) => {
-          if (!orders || (orders.length == 0)) {
-            this.mlp = this.movies[Math.floor(Math.random() * this.movies.length)];
-            return;
-          }
           orders.forEach((o) => {
             o.movies.forEach((om) => {
               om.category = this.categories.find(c => c._id == om.category);
@@ -94,7 +87,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           });
           const userMoviesOfMostWatchCategoryUnWAtched = this.movies.filter(m => m.category.name == mostWatchedCategoryName
             && userMoviesOfMostWatchCategory.indexOf(m._id) == -1);
-          if (userMoviesOfMostWatchCategoryUnWAtched) {
+          if (userMoviesOfMostWatchCategoryUnWAtched && userMoviesOfMostWatchCategoryUnWAtched.length > 0) {
             userMoviesOfMostWatchCategoryUnWAtched.sort(this.compare);
             this.mlp = userMoviesOfMostWatchCategoryUnWAtched[0];
           }
