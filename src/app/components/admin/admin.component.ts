@@ -35,8 +35,11 @@ export class AdminComponent implements OnInit {
 
   newUser = {
     email: '',
-    password: ''
+    password: '',
+    gender: ''
   };
+  genders = ['Male', 'Female'];
+
   searchText: '';
   searchCat: any;
   searchPrice: 0;
@@ -110,71 +113,8 @@ export class AdminComponent implements OnInit {
 
   ngAfterContentInit() {
     // get data for the charts
-    this.service.getCategories().subscribe((cats: any) => {
-      this.service.getMoviebycat().subscribe((res: any) => {
-        var data = [];
-        if (res) {
-
-          res.forEach((r) => {
-            let cat = cats.find((c) => {
-              return c._id.toString() == r._id.toString();
-            });
-
-            data.push({name: cat.name, count: r.count});
-          });
-        }
-        var svg = d3.select('svg'),
-          width = parseInt(svg.attr('width')),
-          height = parseInt(svg.attr('height')),
-          radius = Math.min(width, height) / 2;
-
-        var g = svg.append('g')
-          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-
-        var color = d3.scaleOrdinal(['#4daf4a', '#377eb8', '#ff7f00', '#984ea3', '#e41a1c']);
-
-        var pie = d3.pie().value(function(d: any) {
-          return d.count;
-        });
-
-        var path: any = d3.arc()
-          .outerRadius(radius - 10)
-          .innerRadius(0);
-
-        var label = d3.arc()
-          .outerRadius(radius)
-          .innerRadius(radius - 80);
-
-        var arc = g.selectAll('.arc')
-          .data(pie(data))
-          .enter().append('g')
-          .attr('class', 'arc');
-
-        arc.append('path')
-          .attr('d', path)
-          .attr('fill', function(d: any) {
-            return color(d.data.name);
-          });
-
-        arc.append('text')
-          .attr('transform', function(d: any) {
-            return 'translate(' + label.centroid(d) + ')';
-          })
-          .text(function(d: any) {
-            return d.data.name;
-          });
-
-        svg.append('g')
-          .attr('transform', 'translate(' + (width / 2 - 120) + ',' + 20 + ')')
-          .append('text')
-          .attr('class', 'title');
-      });
-    });
-    this.service.groupByGender().subscribe((res) => {
-      this.data = res;
-      this.initSvg();
-      this.drawChart(this.data);
-    });
+    this.setupCharts();
+    this.initCharts();
 
   }
 
@@ -309,4 +249,74 @@ export class AdminComponent implements OnInit {
   }
 
 
+  private initCharts() {
+    this.service.groupByGender().subscribe((res) => {
+      this.data = res;
+      this.initSvg();
+      this.drawChart(this.data);
+    });
+  }
+
+  private setupCharts() {
+    this.service.getCategories().subscribe((cats: any) => {
+      this.service.getMoviebycat().subscribe((res: any) => {
+        var data = [];
+        if (res) {
+
+          res.forEach((r) => {
+            let cat = cats.find((c) => {
+              return c._id.toString() == r._id.toString();
+            });
+
+            data.push({name: cat.name, count: r.count});
+          });
+        }
+        var svg = d3.select('svg'),
+          width = parseInt(svg.attr('width')),
+          height = parseInt(svg.attr('height')),
+          radius = Math.min(width, height) / 2;
+
+        var g = svg.append('g')
+          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+        var color = d3.scaleOrdinal(['#4daf4a', '#377eb8', '#ff7f00', '#984ea3', '#e41a1c']);
+
+        var pie = d3.pie().value(function(d: any) {
+          return d.count;
+        });
+
+        var path: any = d3.arc()
+          .outerRadius(radius - 10)
+          .innerRadius(0);
+
+        var label = d3.arc()
+          .outerRadius(radius)
+          .innerRadius(radius - 80);
+
+        var arc = g.selectAll('.arc')
+          .data(pie(data))
+          .enter().append('g')
+          .attr('class', 'arc');
+
+        arc.append('path')
+          .attr('d', path)
+          .attr('fill', function(d: any) {
+            return color(d.data.name);
+          });
+
+        arc.append('text')
+          .attr('transform', function(d: any) {
+            return 'translate(' + label.centroid(d) + ')';
+          })
+          .text(function(d: any) {
+            return d.data.name;
+          });
+
+        svg.append('g')
+          .attr('transform', 'translate(' + (width / 2 - 120) + ',' + 20 + ')')
+          .append('text')
+          .attr('class', 'title');
+      });
+    });
+  }
 }

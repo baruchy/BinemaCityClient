@@ -361,6 +361,12 @@
           <label for="">Password:</label>
           <input type="text" class="form-control" [(ngModel)]="newUser.password">
         </div>
+        <div class="form-group">
+          <label for="">Gender:</label>
+          <select [(ngModel)]="newUser.gender" name="gender" class="form-control">
+            <option *ngFor="let g of genders" [ngValue]="g">{{g}}</option>
+          </select>
+        </div>
 
       </div>
       <div class="modal-footer">
