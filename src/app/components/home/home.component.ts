@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, NgZone, OnInit} from '@angular/core';
+import {AfterViewInit, Component, NgZone, OnInit} from '@angular/core';
 import {ViewChild} from '@angular/core';
 import {NotificationsComponent} from '../notifications/notifications.component';
 import {GlobalService} from '../../services/global.service';

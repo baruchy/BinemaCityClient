@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GlobalService} from '../../services/global.service';
 import {AuthService} from '../../services/auth.service';
 

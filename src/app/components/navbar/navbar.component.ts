@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {GlobalService} from '../../services/global.service';
 
@@ -19,7 +18,7 @@ export class NavbarComponent implements OnInit {
     this.user = this.auth.getUser();
     if (this.user) {
       this.isLoggedIn = true;
-      this.isAdmin = this.user.role == 'admin';      
+      this.isAdmin = this.user.role == 'admin';
     }
 
     this.service.onClearBusketCallback$.subscribe(data => {
