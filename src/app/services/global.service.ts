@@ -218,7 +218,6 @@ export class GlobalService {
     return this.http.get('http://localhost:3000/api/users/' + userId + '/getml');
   }
 
-//Gte the chart data by gender
   groupByGender() {
     return this.http.get('http://localhost:3000/api/groupByGender');
   }
