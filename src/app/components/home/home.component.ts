@@ -51,7 +51,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         i++;
       });
       this.mlp = this.movies[Math.floor(Math.random() * this.movies.length)];
-
       if (this.user && this.user._id) {
         let userMoviesPerCategory = {};
         this.service.getUserOrders(this.user._id).subscribe((orders: any) => {

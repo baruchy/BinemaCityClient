@@ -109,14 +109,14 @@ export class GlobalService {
   signup(email, password, gender) {
 
     var data = {email: email, password: password, gender: gender};
-    return this.http.post('http://localhost:3000/api/register', data);
+    return this.http.post('http://localhost:3000/api/v1/register', data);
 
   }
 
   signin(email, password) {
 
     var data = {email: email, password: password};
-    return this.http.post('http://localhost:3000/api/login', data);
+    return this.http.post('http://localhost:3000/api/v1/login', data);
   }
 
   logOut() {
@@ -128,77 +128,76 @@ export class GlobalService {
 
   // CATEGORIES
   getCategories() {
-    return this.http.get('http://localhost:3000/api/categories');
+    return this.http.get('http://localhost:3000/api/v1/categories');
   }
 
   createCategories(c: any) {
-    return this.http.post('http://localhost:3000/api/categories', c);
+    return this.http.post('http://localhost:3000/api/v1/categories', c);
   }
 
   updateCategory(c: any) {
-    return this.http.put('http://localhost:3000/api/categories/' + c._id, c);
+    return this.http.put('http://localhost:3000/api/v1/categories/' + c._id, c);
   }
 
   deleteCategories(c: any) {
-    return this.http.delete('http://localhost:3000/api/categories/' + c._id, c);
+    return this.http.delete('http://localhost:3000/api/v1/categories/' + c._id, c);
   }
 
 
   //movies
   getMovies() {
-    return this.http.get('http://localhost:3000/api/movies');
+    return this.http.get('http://localhost:3000/api/v1/movies');
   }
 
   createMovies(c: any) {
-    return this.http.post('http://localhost:3000/api/movies', c);
+    return this.http.post('http://localhost:3000/api/v1/movies', c);
   }
 
   updateMovies(c: any) {
-    return this.http.put('http://localhost:3000/api/Movies/' + c._id, c);
+    return this.http.put('http://localhost:3000/api/v1/Movies/' + c._id, c);
   }
 
   deleteMovies(c: any) {
-    console.log(c);
-    return this.http.delete('http://localhost:3000/api/Movies/' + c._id, c);
+    return this.http.delete('http://localhost:3000/api/v1/Movies/' + c._id, c);
   }
 
 
   //USERS
   getUsers() {
-    return this.http.get('http://localhost:3000/api/Users');
+    return this.http.get('http://localhost:3000/api/v1/Users');
   }
 
   getUserOrders(id: any) {
-    return this.http.get('http://localhost:3000/api/Users/' + id + '/orders');
+    return this.http.get('http://localhost:3000/api/v1/Users/' + id + '/orders');
   }
 
   createUser(c: any) {
-    return this.http.post('http://localhost:3000/api/Users', c);
+    return this.http.post('http://localhost:3000/api/v1/Users', c);
   }
 
   updateUser(c: any) {
-    return this.http.put('http://localhost:3000/api/Users/' + c._id, c);
+    return this.http.put('http://localhost:3000/api/v1/Users/' + c._id, c);
   }
 
   deleteUser(c: any) {
-    return this.http.delete('http://localhost:3000/api/Users/' + c._id, c);
+    return this.http.delete('http://localhost:3000/api/v1/Users/' + c._id, c);
   }
 
   //ORDERS
   getOrders(id) {
-    return this.http.get('http://localhost:3000/api/Orders/');
+    return this.http.get('http://localhost:3000/api/v1/Orders/');
   }
 
   createOrders(c: any) {
-    return this.http.post('http://localhost:3000/api/Orders', c);
+    return this.http.post('http://localhost:3000/api/v1/Orders', c);
   }
 
   updateOrders(c: any) {
-    return this.http.put('http://localhost:3000/api/Orders/' + c._id, c);
+    return this.http.put('http://localhost:3000/api/v1/Orders/' + c._id, c);
   }
 
   deleteOrders(c: any) {
-    return this.http.delete('http://localhost:3000/api/Orders/' + c._id, c);
+    return this.http.delete('http://localhost:3000/api/v1/Orders/' + c._id, c);
   }
 
   getBitcoinRate() {
@@ -207,19 +206,21 @@ export class GlobalService {
   }
 
   getMoviebycat() {
-    return this.http.get('http://localhost:3000/api/movieByCategory');
+    var request: any = {};
+    request.field = 'category';
+    return this.http.get('http://localhost:3000/api/v1/movies/groupBy', request);
   }
 
   getLocations() {
-    return this.http.get('http://localhost:3000/api/maps');
+    return this.http.get('http://localhost:3000/api/v1/maps');
   }
 
   getMlProduct(userId) {
-    return this.http.get('http://localhost:3000/api/users/' + userId + '/getml');
+    return this.http.get('http://localhost:3000/api/v1/users/' + userId + '/getml');
   }
 
   groupByGender() {
-    return this.http.get('http://localhost:3000/api/groupByGender');
+    return this.http.get('http://localhost:3000/api/v1/groupByGender');
   }
 
 //SOCKET EMITTERS
