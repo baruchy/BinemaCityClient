@@ -206,21 +206,15 @@ export class GlobalService {
   }
 
   getMoviebycat() {
-    var request: any = {};
-    request.field = 'category';
-    return this.http.get('http://localhost:3000/api/v1/movies/groupBy', request);
+    return this.http.get('http://localhost:3000/api/v1/movies/groupBy/category');
   }
 
   getLocations() {
-    return this.http.get('http://localhost:3000/api/v1/maps');
-  }
-
-  getMlProduct(userId) {
-    return this.http.get('http://localhost:3000/api/v1/users/' + userId + '/getml');
+    return this.http.get('http://localhost:3000/api/v1/locations');
   }
 
   groupByGender() {
-    return this.http.get('http://localhost:3000/api/v1/groupByGender');
+    return this.http.get('http://localhost:3000/api/v1/users/groupBy/gender');
   }
 
 //SOCKET EMITTERS

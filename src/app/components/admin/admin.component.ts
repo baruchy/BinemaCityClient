@@ -256,17 +256,13 @@ export class AdminComponent implements OnInit {
   }
 
   private setupCharts() {
-    this.service.getCategories().subscribe((cats: any) => {
       this.service.getMoviebycat().subscribe((res: any) => {
+        console.log(res);
         var data = [];
         if (res) {
 
           res.forEach((r) => {
-            let cat = cats.find((c) => {
-              return c._id.toString() == r._id.toString();
-            });
-
-            data.push({name: cat.name, count: r.count});
+            data.push({name: r._id.name, count: r.count});
           });
         }
         var svg = d3.select('svg'),
@@ -315,6 +311,5 @@ export class AdminComponent implements OnInit {
           .append('text')
           .attr('class', 'title');
       });
-    });
   }
 }
